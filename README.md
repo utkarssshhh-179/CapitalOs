@@ -20,3 +20,4 @@ Modular monolith, layered: router -> service -> repository -> PostgreSQL. See `d
 
 ## Roadmap
 0 Foundation (done) -> 1 Auth & RBAC -> 2 Audit -> 3 Borrowers/Investors -> 4 Loan engine -> ...
+# CapitalOs
