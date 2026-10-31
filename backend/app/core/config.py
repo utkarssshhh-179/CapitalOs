@@ -4,7 +4,7 @@ from typing import Literal
 from pydantic import Field, SecretStr, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-_INSECURE_DEFAULT_SECRET = "change-me-in-production"  # noqa: S105
+_INSECURE_DEFAULT_SECRET = "change-me-in-production-please-use-32+"  # noqa: S105
 
 
 class Settings(BaseSettings):
