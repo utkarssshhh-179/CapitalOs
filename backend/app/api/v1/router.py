@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from app.modules.ai.router import router as ai_router
+from app.modules.audit_log.router import router as audit_log_router
 from app.modules.auth.router import router as auth_router
 from app.modules.borrower.router import router as borrower_router
 from app.modules.collection.router import router as collection_router
@@ -21,6 +22,7 @@ api_router = APIRouter()
 api_router.include_router(health_router)
 api_router.include_router(organization_router)
 api_router.include_router(auth_router)
+api_router.include_router(audit_log_router)
 api_router.include_router(borrower_router)
 api_router.include_router(investor_router)
 api_router.include_router(loan_router)

@@ -1,3 +1,4 @@
+from app.models.audit_log import AuditAction, AuditLog
 from app.models.borrower import Borrower, BorrowerStatus
 from app.models.collection import Collection, CollectionStatus
 from app.models.investor import Investor, InvestorStatus
@@ -14,6 +15,8 @@ from app.models.role import Role
 from app.models.user import User
 
 __all__ = [
+    "AuditAction",
+    "AuditLog",
     "Borrower",
     "BorrowerStatus",
     "Collection",
