@@ -157,29 +157,38 @@
         </section>
 
         <section class="view" id="borrowers-view">
-          <div class="panel">
-            <div class="panel-header panel-header-spread">
-              <h2>Borrower pipeline</h2>
-              <div class="segmented-control">
-                <button class="segmented active" data-borrower-filter="all">All</button>
-                <button class="segmented" data-borrower-filter="active">Active</button>
-                <button class="segmented" data-borrower-filter="watchlist">Watchlist</button>
+          <div class="borrower-layout">
+            <div class="panel borrower-panel">
+              <div class="panel-header panel-header-spread">
+                <h2>Borrower pipeline</h2>
+                <div class="segmented-control">
+                  <button class="segmented active" data-borrower-filter="all">All</button>
+                  <button class="segmented" data-borrower-filter="active">Active</button>
+                  <button class="segmented" data-borrower-filter="watchlist">Watchlist</button>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Borrower</th>
+                      <th>Segment</th>
+                      <th>Risk</th>
+                      <th>Balance</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="borrowers-table-body"></tbody>
+                </table>
               </div>
             </div>
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Borrower</th>
-                    <th>Segment</th>
-                    <th>Risk</th>
-                    <th>Balance</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody id="borrowers-table-body"></tbody>
-              </table>
-            </div>
+
+            <aside class="panel borrower-detail-panel" id="borrower-detail-panel">
+              <div class="panel-header">
+                <h2>Borrower profile</h2>
+              </div>
+              <div id="borrower-profile"></div>
+            </aside>
           </div>
         </section>
 
@@ -282,6 +291,16 @@
           </label>
           <button class="primary-button full-width" type="submit">Create loan</button>
         </form>
+      </div>
+    </div>
+
+    <div class="modal" id="borrower-modal" aria-hidden="true">
+      <div class="modal-card details-card">
+        <div class="panel-header panel-header-spread">
+          <h2>Borrower details</h2>
+          <button class="icon-button" id="close-borrower-modal-btn" aria-label="Close borrower details">×</button>
+        </div>
+        <div id="borrower-modal-content"></div>
       </div>
     </div>
 

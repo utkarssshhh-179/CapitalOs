@@ -15,11 +15,66 @@ const fallbackData = {
 const demoPortfolio = [38, 52, 45, 60, 63, 72];
 
 const demoBorrowers = [
-  { name: 'Ava Patel', segment: 'prime', risk: 'low', balance: 255000, status: 'active' },
-  { name: 'Noah Chen', segment: 'professional', risk: 'medium', balance: 430000, status: 'watchlist' },
-  { name: 'Mila Rodriguez', segment: 'consumer', risk: 'medium', balance: 190000, status: 'active' },
-  { name: 'Leo Carter', segment: 'prime', risk: 'low', balance: 610000, status: 'active' },
-  { name: 'Sofia Martin', segment: 'smaller', risk: 'high', balance: 280000, status: 'watchlist' },
+  {
+    name: 'Ava Patel',
+    segment: 'prime',
+    risk: 'low',
+    balance: 255000,
+    status: 'active',
+    email: 'ava.patel@capitalos.io',
+    location: 'Singapore',
+    score: 82,
+    lastActivity: 'Approved EMI renewal',
+    nextAction: 'Review underwriting data',
+  },
+  {
+    name: 'Noah Chen',
+    segment: 'professional',
+    risk: 'medium',
+    balance: 430000,
+    status: 'watchlist',
+    email: 'noah.chen@capitalos.io',
+    location: 'Hong Kong',
+    score: 68,
+    lastActivity: 'Missed payment alert',
+    nextAction: 'Escalate to collections',
+  },
+  {
+    name: 'Mila Rodriguez',
+    segment: 'consumer',
+    risk: 'medium',
+    balance: 190000,
+    status: 'active',
+    email: 'mila.rodriguez@capitalos.io',
+    location: 'Mexico City',
+    score: 72,
+    lastActivity: 'On-time repayment',
+    nextAction: 'Offer top-up review',
+  },
+  {
+    name: 'Leo Carter',
+    segment: 'prime',
+    risk: 'low',
+    balance: 610000,
+    status: 'active',
+    email: 'leo.carter@capitalos.io',
+    location: 'Dubai',
+    score: 88,
+    lastActivity: 'Disbursement confirmed',
+    nextAction: 'Schedule next milestone',
+  },
+  {
+    name: 'Sofia Martin',
+    segment: 'smaller',
+    risk: 'high',
+    balance: 280000,
+    status: 'watchlist',
+    email: 'sofia.martin@capitalos.io',
+    location: 'Berlin',
+    score: 61,
+    lastActivity: 'Need document verification',
+    nextAction: 'Request compliance review',
+  },
 ];
 
 const demoLoans = [
@@ -128,7 +183,7 @@ const renderBorrowers = () => {
   tbody.innerHTML = filtered
     .map(
       (borrower) => `
-        <tr>
+        <tr class="borrower-row" data-borrower-name="${borrower.name}">
           <td><strong>${borrower.name}</strong></td>
           <td><span class="segment-badge ${borrower.segment}">${borrower.segment}</span></td>
           <td><span class="risk-badge ${borrower.risk}">${borrower.risk}</span></td>
@@ -138,6 +193,17 @@ const renderBorrowers = () => {
       `
     )
     .join('');
+
+  tbody.querySelectorAll('.borrower-row').forEach((row) => {
+    row.addEventListener('click', () => {
+      const name = row.dataset.borrowerName;
+      const borrower = demoBorrowers.find((client) => client.name === name);
+      if (borrower) {
+        renderBorrowerProfile(borrower);
+        openBorrowerModal(borrower);
+      }
+    });
+  });
 };
 
 const renderLoans = () => {
@@ -221,6 +287,73 @@ const renderReports = () => {
       `
     )
     .join('');
+};
+
+const openBorrowerModal = (borrower) => {
+  const content = document.getElementById('borrower-modal-content');
+  if (!content) return;
+
+  const detail = `
+    <div class="profile-card">
+      <div class="profile-header">
+        <h3>${borrower.name}</h3>
+        <span class="status-badge ${borrower.status}">${borrower.status}</span>
+      </div>
+      <div class="profile-metrics">
+        <div class="profile-metric">
+          <span>Credit score</span>
+          <strong>${borrower.score}</strong>
+        </div>
+        <div class="profile-metric">
+          <span>Outstanding</span>
+          <strong>${formatCompactCurrency(borrower.balance)}</strong>
+        </div>
+      </div>
+      <div class="profile-list">
+        <div class="profile-row"><span>Segment</span><strong>${borrower.segment}</strong></div>
+        <div class="profile-row"><span>Risk</span><strong>${borrower.risk}</strong></div>
+        <div class="profile-row"><span>Location</span><strong>${borrower.location}</strong></div>
+        <div class="profile-row"><span>Email</span><strong>${borrower.email}</strong></div>
+        <div class="profile-row"><span>Last activity</span><strong>${borrower.lastActivity}</strong></div>
+        <div class="profile-row"><span>Next action</span><strong>${borrower.nextAction}</strong></div>
+      </div>
+    </div>
+  `;
+
+  content.innerHTML = detail;
+  document.getElementById('borrower-modal').classList.add('open');
+};
+
+const renderBorrowerProfile = (borrower) => {
+  const panel = document.getElementById('borrower-profile');
+  if (!panel) return;
+
+  const profile = borrower || demoBorrowers[0];
+  panel.innerHTML = `
+    <div class="profile-card">
+      <div class="profile-header">
+        <h3>${profile.name}</h3>
+        <span class="status-badge ${profile.status}">${profile.status}</span>
+      </div>
+      <div class="profile-metrics">
+        <div class="profile-metric">
+          <span>Risk</span>
+          <strong>${profile.risk}</strong>
+        </div>
+        <div class="profile-metric">
+          <span>Balance</span>
+          <strong>${formatCompactCurrency(profile.balance)}</strong>
+        </div>
+      </div>
+      <div class="profile-list">
+        <div class="profile-row"><span>Credit score</span><strong>${profile.score}</strong></div>
+        <div class="profile-row"><span>Segment</span><strong>${profile.segment}</strong></div>
+        <div class="profile-row"><span>Location</span><strong>${profile.location}</strong></div>
+        <div class="profile-row"><span>Last activity</span><strong>${profile.lastActivity}</strong></div>
+        <div class="profile-row"><span>Next action</span><strong>${profile.nextAction}</strong></div>
+      </div>
+    </div>
+  `;
 };
 
 const showView = (viewName) => {
@@ -430,14 +563,25 @@ const bindDemoToggle = () => {
 
 document.getElementById('refresh-button')?.addEventListener('click', refreshDashboard);
 
+const bindBorrowerDetails = () => {
+  const modal = document.getElementById('borrower-modal');
+  const closeBtn = document.getElementById('close-borrower-modal-btn');
+  closeBtn.addEventListener('click', () => modal.classList.remove('open'));
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) modal.classList.remove('open');
+  });
+};
+
 bindNav();
 bindFilterButtons();
 bindSearch();
 bindModal();
 bindAuthFlow();
 bindDemoToggle();
+bindBorrowerDetails();
 renderBars(demoPortfolio);
 renderBorrowers();
+renderBorrowerProfile(demoBorrowers[0]);
 renderLoans();
 renderCollections();
 renderReports();
