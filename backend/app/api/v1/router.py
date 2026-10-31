@@ -13,8 +13,9 @@ from app.modules.loan.router import router as loan_router
 from app.modules.loan_schedule.router import router as loan_schedule_router
 from app.modules.loan_servicing.router import router as loan_servicing_router
 from app.modules.organization.router import router as organization_router
-from app.modules.underwriting.router import router as underwriting_router
 from app.modules.payment.router import router as payment_router
+from app.modules.reports.router import router as reports_router
+from app.modules.underwriting.router import router as underwriting_router
 
 api_router = APIRouter()
 api_router.include_router(health_router)
@@ -26,6 +27,7 @@ api_router.include_router(loan_router)
 api_router.include_router(loan_schedule_router)
 api_router.include_router(loan_servicing_router)
 api_router.include_router(underwriting_router)
+api_router.include_router(reports_router)
 api_router.include_router(payment_router)
 api_router.include_router(ledger_router)
 api_router.include_router(collection_router)
