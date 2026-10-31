@@ -57,8 +57,8 @@ Status: 🟡 In Progress
 
 ## Sprint 3 – Borrowers
 
-- [ ] Borrower Model
-- [ ] CRUD API
+- [x] Borrower Model
+- [x] CRUD API
 - [ ] Search
 - [ ] Filters
 
