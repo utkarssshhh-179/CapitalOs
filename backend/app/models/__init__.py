@@ -1,5 +1,6 @@
 from app.models.borrower import Borrower, BorrowerStatus
 from app.models.investor import Investor, InvestorStatus
+from app.models.loan import Loan, LoanStatus
 from app.models.organization import Organization, OrganizationStatus
 from app.models.permission import Permission
 from app.models.refresh_token import RefreshToken
@@ -11,6 +12,8 @@ __all__ = [
     "BorrowerStatus",
     "Investor",
     "InvestorStatus",
+    "Loan",
+    "LoanStatus",
     "Organization",
     "OrganizationStatus",
     "Permission",
