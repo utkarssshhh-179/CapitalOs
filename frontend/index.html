@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CapitalOS Dashboard</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">C</div>
+          <div>
+            <div class="brand-name">CapitalOS</div>
+            <div class="brand-subtitle">Lending Ops</div>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <button class="nav-item active">Overview</button>
+          <button class="nav-item">Portfolio</button>
+          <button class="nav-item">Borrowers</button>
+          <button class="nav-item">Collections</button>
+          <button class="nav-item">Reports</button>
+          <button class="nav-item">Settings</button>
+        </nav>
+      </aside>
+
+      <main class="main-panel">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Operations dashboard</p>
+            <h1>Portfolio overview</h1>
+          </div>
+          <div class="topbar-actions">
+            <span id="connection-status" class="status-pill offline">Checking backend…</span>
+            <button class="primary-button" id="refresh-button">Refresh</button>
+          </div>
+        </header>
+
+        <section class="summary-grid" id="summary-grid">
+          <article class="metric-card accent-blue">
+            <span class="metric-label">Organizations</span>
+            <strong id="organizations">0</strong>
+          </article>
+          <article class="metric-card accent-green">
+            <span class="metric-label">Borrowers</span>
+            <strong id="borrowers">0</strong>
+          </article>
+          <article class="metric-card accent-purple">
+            <span class="metric-label">Investors</span>
+            <strong id="investors">0</strong>
+          </article>
+          <article class="metric-card accent-orange">
+            <span class="metric-label">Loans</span>
+            <strong id="loans">0</strong>
+          </article>
+        </section>
+
+        <section class="details-grid">
+          <article class="panel">
+            <div class="panel-header">
+              <h2>Cash flow</h2>
+            </div>
+            <div class="value-stack">
+              <div class="value-row">
+                <span>Total loan value</span>
+                <strong id="total-loan-value">$0</strong>
+              </div>
+              <div class="value-row">
+                <span>Total paid value</span>
+                <strong id="total-paid-value">$0</strong>
+              </div>
+              <div class="value-row">
+                <span>Active loans</span>
+                <strong id="active-loans">0</strong>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header">
+              <h2>Payment activity</h2>
+            </div>
+            <div class="metric-stack">
+              <div class="mini-stat">
+                <span>Payments</span>
+                <strong id="payments">0</strong>
+              </div>
+              <div class="mini-stat">
+                <span>Paid</span>
+                <strong id="paid-payments">0</strong>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel full-width">
+            <div class="panel-header">
+              <h2>Application status</h2>
+            </div>
+            <div id="status-message" class="status-message neutral">
+              Loading platform status...
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
