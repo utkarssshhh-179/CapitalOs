@@ -10,6 +10,7 @@ from app.modules.health.router import router as health_router
 from app.modules.investor.router import router as investor_router
 from app.modules.ledger.router import router as ledger_router
 from app.modules.loan.router import router as loan_router
+from app.modules.loan_schedule.router import router as loan_schedule_router
 from app.modules.organization.router import router as organization_router
 from app.modules.payment.router import router as payment_router
 
@@ -20,6 +21,7 @@ api_router.include_router(auth_router)
 api_router.include_router(borrower_router)
 api_router.include_router(investor_router)
 api_router.include_router(loan_router)
+api_router.include_router(loan_schedule_router)
 api_router.include_router(payment_router)
 api_router.include_router(ledger_router)
 api_router.include_router(collection_router)

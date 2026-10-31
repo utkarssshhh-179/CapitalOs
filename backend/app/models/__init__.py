@@ -3,6 +3,7 @@ from app.models.collection import Collection, CollectionStatus
 from app.models.investor import Investor, InvestorStatus
 from app.models.ledger import LedgerDirection, LedgerEntry, LedgerEntryType
 from app.models.loan import Loan, LoanStatus
+from app.models.loan_schedule import LoanSchedule, LoanScheduleStatus
 from app.models.organization import Organization, OrganizationStatus
 from app.models.payment import Payment, PaymentStatus
 from app.models.permission import Permission
@@ -21,6 +22,8 @@ __all__ = [
     "LedgerEntry",
     "LedgerEntryType",
     "Loan",
+    "LoanSchedule",
+    "LoanScheduleStatus",
     "LoanStatus",
     "Organization",
     "OrganizationStatus",
