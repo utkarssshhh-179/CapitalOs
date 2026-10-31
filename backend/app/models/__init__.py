@@ -1,4 +1,5 @@
 from app.models.borrower import Borrower, BorrowerStatus
+from app.models.collection import Collection, CollectionStatus
 from app.models.investor import Investor, InvestorStatus
 from app.models.loan import Loan, LoanStatus
 from app.models.organization import Organization, OrganizationStatus
@@ -11,6 +12,8 @@ from app.models.user import User
 __all__ = [
     "Borrower",
     "BorrowerStatus",
+    "Collection",
+    "CollectionStatus",
     "Investor",
     "InvestorStatus",
     "Loan",
