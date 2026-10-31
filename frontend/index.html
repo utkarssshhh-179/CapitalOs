@@ -7,7 +7,37 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div class="app-shell">
+    <div class="auth-shell" id="auth-shell">
+      <div class="auth-card">
+        <div class="auth-brand">
+          <div class="brand-mark">C</div>
+          <div>
+            <div class="brand-name">CapitalOS</div>
+            <div class="brand-subtitle">Lending Intelligence</div>
+          </div>
+        </div>
+
+        <div class="auth-intro">
+          <p class="eyebrow auth-eyebrow">Secure portal</p>
+          <h2>Welcome back</h2>
+          <p>Access your portfolio operations, credit risk, and collections workspace.</p>
+        </div>
+
+        <form id="login-form" class="login-form">
+          <label>
+            Email
+            <input type="email" name="email" value="ops@capitalos.io" required />
+          </label>
+          <label>
+            Password
+            <input type="password" name="password" value="capitalos123" required />
+          </label>
+          <button class="primary-button full-width" type="submit">Sign in to dashboard</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="app-shell hidden" id="app-shell">
       <aside class="sidebar">
         <div class="brand">
           <div class="brand-mark">C</div>
@@ -17,51 +47,63 @@
           </div>
         </div>
 
-        <nav class="nav">
-          <button class="nav-item active">Overview</button>
-          <button class="nav-item">Portfolio</button>
-          <button class="nav-item">Borrowers</button>
-          <button class="nav-item">Collections</button>
-          <button class="nav-item">Reports</button>
-          <button class="nav-item">Settings</button>
+        <nav class="nav" aria-label="Main navigation">
+          <button class="nav-item active" data-view="overview">Overview</button>
+          <button class="nav-item" data-view="borrowers">Borrowers</button>
+          <button class="nav-item" data-view="loans">Loans</button>
+          <button class="nav-item" data-view="collections">Collections</button>
+          <button class="nav-item" data-view="reports">Reports</button>
+          <button class="nav-item" data-view="settings">Settings</button>
         </nav>
       </aside>
 
       <main class="main-panel">
         <header class="topbar">
-          <div>
+          <div class="heading-wrap">
             <p class="eyebrow">Operations dashboard</p>
-            <h1>Portfolio overview</h1>
+            <h1 id="page-heading">Portfolio overview</h1>
           </div>
+
           <div class="topbar-actions">
+            <label class="search-box" aria-label="Search">
+              <span>⌕</span>
+              <input id="global-search" type="text" placeholder="Search borrowers, loans, cases..." />
+            </label>
             <span id="connection-status" class="status-pill offline">Checking backend…</span>
-            <button class="primary-button" id="refresh-button">Refresh</button>
+            <button class="ghost-button" id="refresh-button">Refresh</button>
+            <button class="ghost-button" id="demo-mode-toggle">Demo mode</button>
+            <button class="ghost-button" id="logout-button">Log out</button>
+            <button class="primary-button" id="create-loan-btn">Create loan</button>
           </div>
         </header>
-
-        <section class="summary-grid" id="summary-grid">
+        <section class="overview-grid view visible" id="overview-view">
           <article class="metric-card accent-blue">
             <span class="metric-label">Organizations</span>
             <strong id="organizations">0</strong>
+            <small>Across active branches</small>
           </article>
           <article class="metric-card accent-green">
             <span class="metric-label">Borrowers</span>
             <strong id="borrowers">0</strong>
+            <small>Active client base</small>
           </article>
           <article class="metric-card accent-purple">
             <span class="metric-label">Investors</span>
             <strong id="investors">0</strong>
+            <small>Capital partners</small>
           </article>
           <article class="metric-card accent-orange">
             <span class="metric-label">Loans</span>
             <strong id="loans">0</strong>
+            <small>Booked this cycle</small>
           </article>
         </section>
 
-        <section class="details-grid">
+        <section class="details-grid view visible" id="overview-view-details">
           <article class="panel">
             <div class="panel-header">
               <h2>Cash flow</h2>
+              <span class="chip success">+14.8%</span>
             </div>
             <div class="value-stack">
               <div class="value-row">
@@ -82,6 +124,7 @@
           <article class="panel">
             <div class="panel-header">
               <h2>Payment activity</h2>
+              <span class="chip neutral">This month</span>
             </div>
             <div class="metric-stack">
               <div class="mini-stat">
@@ -95,6 +138,14 @@
             </div>
           </article>
 
+          <article class="panel chart-panel">
+            <div class="panel-header">
+              <h2>Portfolio trend</h2>
+              <span class="chip neutral">6M</span>
+            </div>
+            <div class="bar-chart" id="portfolio-bars" aria-label="Portfolio trend chart"></div>
+          </article>
+
           <article class="panel full-width">
             <div class="panel-header">
               <h2>Application status</h2>
@@ -104,8 +155,137 @@
             </div>
           </article>
         </section>
+
+        <section class="view" id="borrowers-view">
+          <div class="panel">
+            <div class="panel-header panel-header-spread">
+              <h2>Borrower pipeline</h2>
+              <div class="segmented-control">
+                <button class="segmented active" data-borrower-filter="all">All</button>
+                <button class="segmented" data-borrower-filter="active">Active</button>
+                <button class="segmented" data-borrower-filter="watchlist">Watchlist</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Borrower</th>
+                    <th>Segment</th>
+                    <th>Risk</th>
+                    <th>Balance</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="borrowers-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="loans-view">
+          <div class="panel">
+            <div class="panel-header panel-header-spread">
+              <h2>Loan operations</h2>
+              <div class="segmented-control">
+                <button class="segmented active" data-loan-filter="all">All</button>
+                <button class="segmented" data-loan-filter="active">Active</button>
+                <button class="segmented" data-loan-filter="approved">Approved</button>
+                <button class="segmented" data-loan-filter="delinquent">Delinquent</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Loan</th>
+                    <th>Borrower</th>
+                    <th>Amount</th>
+                    <th>Rate</th>
+                    <th>Due date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="loans-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="collections-view">
+          <div class="row-panels">
+            <article class="panel">
+              <div class="panel-header">
+                <h2>Collections queue</h2>
+              </div>
+              <div id="collections-list" class="stack-list"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-header">
+                <h2>Team focus</h2>
+              </div>
+              <div id="collections-focus" class="focus-list"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="reports-view">
+          <div class="report-grid" id="reports-grid"></div>
+        </section>
+
+        <section class="view" id="settings-view">
+          <div class="panel settings-panel">
+            <div class="panel-header">
+              <h2>Platform settings</h2>
+            </div>
+            <div class="settings-list">
+              <div class="setting-row">
+                <span>Auto-approval workflow</span>
+                <label class="switch"><input type="checkbox" checked /><span class="slider"></span></label>
+              </div>
+              <div class="setting-row">
+                <span>Fraud screening</span>
+                <label class="switch"><input type="checkbox" checked /><span class="slider"></span></label>
+              </div>
+              <div class="setting-row">
+                <span>Collections reminders</span>
+                <label class="switch"><input type="checkbox" checked /><span class="slider"></span></label>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
+
+    <div class="modal" id="loan-modal" aria-hidden="true">
+      <div class="modal-card">
+        <div class="panel-header panel-header-spread">
+          <h2>New loan request</h2>
+          <button class="icon-button" id="close-modal-btn" aria-label="Close modal">×</button>
+        </div>
+        <form id="loan-form" class="loan-form">
+          <label>
+            Borrower name
+            <input type="text" name="borrower" required />
+          </label>
+          <label>
+            Loan amount
+            <input type="number" name="amount" min="1000" step="1000" required />
+          </label>
+          <label>
+            Interest rate %
+            <input type="number" name="rate" min="1" max="50" step="0.1" required />
+          </label>
+          <label>
+            Due date
+            <input type="date" name="dueDate" required />
+          </label>
+          <button class="primary-button full-width" type="submit">Create loan</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
     <script src="./app.js"></script>
   </body>
